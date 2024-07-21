@@ -12,4 +12,4 @@ power/meter
 
 total consumption
 
-range (a little bugged bc it can't go very far on full draw, if you put 0 it will tell you range on full battery)
+range (a little bugged bc it can't go very far on full draw, if you put 0 for distance it will tell you range based on the battery)

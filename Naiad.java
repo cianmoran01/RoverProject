@@ -47,7 +47,7 @@ public class Naiad {
     if (distance == 0) {
       return 0; // no division by zero
     }
-    return powerProduced / distance;
+    return powerProduced / (distance * 1000); //convert to meters
   }
 
     // total power consumption for the entire mission
@@ -69,7 +69,7 @@ public class Naiad {
   }
 
   public static void main(String[] args) {
-    Naiad rover = new Naiad(200); // initialize rover (number is current battery charge, type battery for full or 309.6)
+    Naiad rover = new Naiad(200); // initialize rover (number is current battery charge, type 309.6 for full)
 
     double distance = 2.0; // example distance (type where rover is located in mission in km)
     System.out.println("Power produced at distance " + distance + " km: " + model(distance) + " W");

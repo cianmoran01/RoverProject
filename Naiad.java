@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class Naiad {
   private double battery = 309.6; // battery at full capacity
   private double currentCapacity; // current battery capacity
@@ -70,23 +72,30 @@ public class Naiad {
   }
 
   public static void main(String[] args) {
-    Naiad rover = new Naiad(309.6); // initialize rover (number is current battery charge, type 309.6 for full
+    Scanner scanner = new Scanner(System.in);
 
-    double distance = 4.75; // example distance (type where rover is located in mission in km)
+    System.out.print("Enter the initial capacity of the rover's battery in watt hours (309.6 for full): ");
+    double initialCap = scanner.nextDouble();
+
+    Naiad rover = new Naiad(initialCap);
+
+    System.out.print("Enter the distance the rover has traveled (km): ");
+    double distance = scanner.nextDouble();
     System.out.println("Power produced at distance " + distance + " km: " + model(distance) + " W");
 
     double chargeTime = rover.chargeTime(distance);
     System.out.println("Time to fully charge: " + chargeTime + " hours");
 
-    double dischargeHours = distance / 0.54; // example time period for discharge
+    double dischargeHours = distance / 0.54;
     rover.simulateDischarge(dischargeHours);
-    System.out.println("Battery capacity after " 
-      + dischargeHours + " hours of discharge: " + rover.getCurrentCapacity() + " Wh");
+    System.out.println("Battery capacity after " + dischargeHours + " hours of discharge: " + rover.getCurrentCapacity() + " Wh");
 
     double powerPerMeter = rover.powerPerMeter(distance);
     System.out.println("Power per meter at distance " + distance + " km: " + powerPerMeter + " W/m");
 
     double totalPowerConsumption = rover.totalPowerConsumption();
     System.out.println("Total power consumption for the entire mission: " + totalPowerConsumption + " Wh");
-  }
+
+    scanner.close();
+    }
 }

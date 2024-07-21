@@ -69,7 +69,7 @@ public class Naiad {
   }
 
   public static void main(String[] args) {
-    Naiad rover = new Naiad(200); // initialize rover (number is current battery charge, type battery for full)
+    Naiad rover = new Naiad(200); // initialize rover (number is current battery charge, type battery for full or 309.6)
 
     double distance = 2.0; // example distance (type where rover is located in mission in km)
     System.out.println("Power produced at distance " + distance + " km: " + model(distance) + " W");

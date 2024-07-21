@@ -77,7 +77,7 @@ public class Naiad {
     double chargeTime = rover.chargeTime(distance);
     System.out.println("Time to fully charge: " + chargeTime + " hours");
 
-    double dischargeHours = 5; // example time period for discharge
+    double dischargeHours = distance / 0.54; // distance divided by rover speed
     rover.simulateDischarge(dischargeHours);
     System.out.println("Battery capacity after " 
       + dischargeHours + " hours of discharge: " + rover.getCurrentCapacity() + " Wh");

@@ -1,5 +1,3 @@
-
-
 public class Naiad {
   private double battery = 309.6; // battery at full capacity
   private double currentCapacity; // current battery capacity

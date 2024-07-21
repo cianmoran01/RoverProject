@@ -30,14 +30,16 @@ public class Naiad {
 
     // battery decrease over time with a full power draw of 278.7 watts (no science instruments)
   public void simulateDischarge(double distance) {
-    double hours = distance / 0.54;	
-    double powerDraw = 278.7; // full power draw in watts
-    double energyConsumed = powerDraw * hours; // energy consumed in watt-hours
-    currentCapacity -= energyConsumed;
-    if (currentCapacity < 0) {
-      currentCapacity = 0;
+        double hours = distance / 0.54;	
+        double powerDraw = 278.7; // full power draw in watts
+        double energyConsumed = powerDraw * hours; // energy consumed in watt-hours
+        currentCapacity -= energyConsumed;
+        if (currentCapacity < 0) {
+            currentCapacity = 0;
+        } else if (currentCapacity > battery) {
+            currentCapacity = battery;
+        }
     }
-  }
 
     // get current battery capacity
   public double getCurrentCapacity() {
@@ -51,8 +53,7 @@ public class Naiad {
       return 0; // no division by zero
     }
     //return powerProduced / (distance * 1000); // convert to meters
-    return (278.7 * (distance / 0.54)) / (distance * 1000); //draw in watt hours over distance in meters
-
+    return (278.7 * (distance / 0.54)) / (distance * 1000);
   }
 
     // total power consumption for the entire mission
@@ -73,6 +74,29 @@ public class Naiad {
     return totalPower;
   }
 
+public double rangeAtCharge() {
+    double range = 0;
+    double remainingCapacity = currentCapacity;
+
+    // range for the first segment (0 to 1.42 km)
+    if (remainingCapacity > 0) {
+        double segment1Power = 411 * 1.296 * (1.42 / 0.54);
+        double segment1Distance = Math.min(1.42, remainingCapacity / segment1Power);
+        range += segment1Distance;
+        remainingCapacity -= segment1Distance * segment1Power;
+    }
+
+    // range for the second segment (1.42 km to 4.875 km)
+    if (remainingCapacity > 0 && range < 4.875) {
+        double segment2PowerStart = 411 * 1.296 * (1.42 / 0.54);
+        double segment2PowerEnd = 0;
+        double segment2Distance = Math.min(3.455, remainingCapacity / ((segment2PowerStart + segment2PowerEnd) / 2));
+        range += segment2Distance;
+    }
+
+    return range;
+}
+
   public static void main(String[] args) {
     Scanner scanner = new Scanner(System.in);
 
@@ -89,7 +113,7 @@ public class Naiad {
     System.out.println("Time to fully charge: " + chargeTime + " hours");
 
     double dischargeHours = distance / 0.54;
-    rover.simulateDischarge(dischargeHours);
+    rover.simulateDischarge(distance);
     System.out.println("Battery capacity after " + dischargeHours + " hours of discharge: " + rover.getCurrentCapacity() + " Wh");
 
     double powerPerMeter = rover.powerPerMeter(distance);
@@ -97,6 +121,9 @@ public class Naiad {
 
     double totalPowerConsumption = rover.totalPowerConsumption();
     System.out.println("Total power consumption for the entire mission: " + totalPowerConsumption + " Wh");
+
+    double range = rover.rangeAtCharge();
+    System.out.println("Range at current charge: " + range + " km");
 
     scanner.close();
     }

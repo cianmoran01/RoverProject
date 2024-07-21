@@ -1,1 +1,1 @@
-you can edit the numbers under main, line 71 i think, to test out the rover under certain conditions like distance and battery charge
+added a scanner so all you have to do is input the current battery charge and distance when prompted, don't have to directly edit code unless you want to change something 

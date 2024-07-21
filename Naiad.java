@@ -27,7 +27,8 @@ public class Naiad {
   }
 
     // battery decrease over time with a full power draw of 278.7 watts (no science instruments)
-  public void simulateDischarge(double hours) {
+  public void simulateDischarge(double distance) {
+    double hours = distance / 0.54;
     double powerDraw = 278.7; // full power draw in watts
     double energyConsumed = powerDraw * hours; // energy consumed in watt-hours
     currentCapacity -= energyConsumed;

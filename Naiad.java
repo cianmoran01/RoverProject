@@ -23,12 +23,12 @@ public class Naiad {
     if (powerProduced == 0) {
       return Double.POSITIVE_INFINITY; // if no power is produced, it will never fully charge
     }
-    return (battery - currentCapacity) / powerProduced;
+    return currentCapacity / powerProduced;
   }
 
     // battery decrease over time with a full power draw of 278.7 watts (no science instruments)
   public void simulateDischarge(double distance) {
-    double hours = distance / 0.54;
+    double hours = distance / 0.54;	
     double powerDraw = 278.7; // full power draw in watts
     double energyConsumed = powerDraw * hours; // energy consumed in watt-hours
     currentCapacity -= energyConsumed;
@@ -48,7 +48,7 @@ public class Naiad {
     if (distance == 0) {
       return 0; // no division by zero
     }
-    return powerProduced / (distance * 1000); //convert to meters
+    return powerProduced / (distance * 1000); // convert to meters
   }
 
     // total power consumption for the entire mission
@@ -70,15 +70,15 @@ public class Naiad {
   }
 
   public static void main(String[] args) {
-    Naiad rover = new Naiad(200); // initialize rover (number is current battery charge, type 309.6 for full)
+    Naiad rover = new Naiad(309.6); // initialize rover (number is current battery charge, type 309.6 for full
 
-    double distance = 2.0; // example distance (type where rover is located in mission in km)
+    double distance = 4.75; // example distance (type where rover is located in mission in km)
     System.out.println("Power produced at distance " + distance + " km: " + model(distance) + " W");
 
     double chargeTime = rover.chargeTime(distance);
     System.out.println("Time to fully charge: " + chargeTime + " hours");
 
-    double dischargeHours = distance / 0.54; // distance divided by rover speed
+    double dischargeHours = distance / 0.54; // example time period for discharge
     rover.simulateDischarge(dischargeHours);
     System.out.println("Battery capacity after " 
       + dischargeHours + " hours of discharge: " + rover.getCurrentCapacity() + " Wh");

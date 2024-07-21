@@ -51,7 +51,7 @@ public class Naiad {
       return 0; // no division by zero
     }
     //return powerProduced / (distance * 1000); // convert to meters
-    return (278.7 * (distance / 0.54)) / (distance * 1000);
+    return (278.7 * (distance / 0.54)) / (distance * 1000); //draw in watt hours over distance in meters
 
   }
 
